@@ -23,7 +23,7 @@ Each statement has a priority, which can be:
 - "Nice to Have", a feature that the game can live without. Can be a new feature altogether or more polish.
 
 Each statement has a state, which can be:
-- "Not Started", nobody is worked on this statement at all.
+- "Not Started", nobody worked on this statement at all.
 - "In Progress", this statement is under active development.
 - "In Review", this statement is being verified by another team member. This line is optional based on the project type.
 - "Integrated", this statement is done. Only bug fixes should happen.
