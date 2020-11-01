@@ -15,7 +15,7 @@
  * Arduboy Community: HokuHakase
  */
 
-// Including the required libraries
+// Including the required libraries.
 #include <Arduboy2.h>
 #include "Tinyfont.h"
 
