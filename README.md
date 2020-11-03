@@ -5,6 +5,10 @@ Game design documents, commented code. How a person who went to school & has pro
 
 The only thing I'm not going to share directly is my JIRA database. I'll do some kind of analysis instead with pictures.
 
+## Play now!
+
+The latest version available on Github can be played by using the following link: https://felipemanga.github.io/ProjectABE/?url=https://github.com/HokuHakase/MathGame/raw/master/bin/mathGame.ino.hex
+
 ## NEEDED TOOLS
 The tools below are what I'm using. Feel free to use your own setup but I may not be able to help you.
 
