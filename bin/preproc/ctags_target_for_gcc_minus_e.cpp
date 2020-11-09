@@ -49,7 +49,9 @@ byte gamespace[6][6];
 byte currentPosX;
 byte currentPosY;
 byte selectMode; //0 = gamespace movement, 1 = number selected
-byte targetResult;
+byte targetResult; // The target number that the player must get
+byte firstNumberX, firstNumberY; // Coordinates for the first selected number
+byte secondNumberX, secondNumberY; // Coordinates for the second selected number
 
 // ===========================
 // GAMEPLAY-SPECIFIC FUNCTIONS
@@ -169,13 +171,13 @@ void loop() {
     arduboy.setCursor(8, 8);
     arduboy.print("Press A to start");
     if(arduboy.justPressed(
-# 162 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino" 3
+# 164 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino" 3
                           (1 << (
-# 162 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino"
+# 164 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino"
                           3
-# 162 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino" 3
+# 164 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino" 3
                           )) 
-# 162 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino"
+# 164 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino"
                           /**< The A button value for functions requiring a bitmask */)){
       gameState = 1;
       NewGame();
@@ -209,55 +211,92 @@ void loop() {
     arduboy.print(targetResult);
 
     if(arduboy.justPressed(
-# 194 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino" 3
+# 196 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino" 3
                           (1 << (
-# 194 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino"
+# 196 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino"
                           7
-# 194 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino" 3
+# 196 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino" 3
                           )) 
-# 194 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino"
+# 196 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino"
                           /**< The Up button value for functions requiring a bitmask */)){
-      if(currentPosY > 0){
+      if(selectMode == 1 && currentPosY > firstNumberY-1){
         currentPosY--;
+      }else{
+        if(currentPosY > 0){
+          currentPosY--;
+        }
       }
     }
     if(arduboy.justPressed(
-# 199 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino" 3
+# 205 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino" 3
                           (1 << (
-# 199 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino"
+# 205 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino"
                           4
-# 199 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino" 3
+# 205 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino" 3
                           )) 
-# 199 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino"
+# 205 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino"
                           /**< The Down button value for functions requiring a bitmask */)){
-      if(currentPosY < (6 -1)){
+      if(selectMode == 1 && currentPosY < firstNumberY+1){
         currentPosY++;
+      }else{
+        if(currentPosY < (6 -1)){
+          currentPosY++;
+        }
       }
     }
     if(arduboy.justPressed(
-# 204 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino" 3
+# 214 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino" 3
                           (1 << (
-# 204 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino"
+# 214 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino"
                           5
-# 204 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino" 3
+# 214 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino" 3
                           )) 
-# 204 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino"
+# 214 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino"
                           /**< The Left button value for functions requiring a bitmask */)){
-      if(currentPosX > 0){
+      if(selectMode == 1 && currentPosX > firstNumberX-1){
         currentPosX--;
+      }else{
+        if(currentPosX > 0){
+          currentPosX--;
+        }
       }
     }
     if(arduboy.justPressed(
-# 209 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino" 3
+# 223 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino" 3
                           (1 << (
-# 209 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino"
+# 223 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino"
                           6
-# 209 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino" 3
+# 223 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino" 3
                           )) 
-# 209 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino"
+# 223 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino"
                           /**< The Right button value for functions requiring a bitmask */)){
-      if(currentPosX < (6 -1)){
+      if(selectMode == 1 && currentPosX < firstNumberX+1){
         currentPosX++;
+      }else{
+        if(currentPosX < (6 -1)){
+          currentPosX++;
+        }
+      }
+    }
+
+    if(arduboy.justPressed(
+# 233 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino" 3
+                          (1 << (
+# 233 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino"
+                          3
+# 233 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino" 3
+                          )) 
+# 233 "d:\\Assets\\GameDev\\Projects\\Arduboy\\MathGame\\MGSource\\mathGame\\mathGame.ino"
+                          /**< The A button value for functions requiring a bitmask */)){
+      // TODO Switch to second number select
+      if(selectMode == 0){
+        firstNumberX = currentPosX;
+        firstNumberY = currentPosY;
+        selectMode = 1;
+      }else if(selectMode == 1){
+        if(currentPosX == firstNumberX && currentPosY == firstNumberY){
+          selectMode = 0;
+        }
       }
     }
   }

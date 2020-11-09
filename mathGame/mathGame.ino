@@ -40,7 +40,9 @@ byte gamespace[GAMESPACE_WIDTH][GAMESPACE_HEIGHT];
 byte currentPosX;
 byte currentPosY;
 byte selectMode; //0 = gamespace movement, 1 = number selected
-byte targetResult;
+byte targetResult; // The target number that the player must get
+byte firstNumberX, firstNumberY; // Coordinates for the first selected number
+byte secondNumberX, secondNumberY; // Coordinates for the second selected number
 
 // ===========================
 // GAMEPLAY-SPECIFIC FUNCTIONS
@@ -192,23 +194,52 @@ void loop() {
     arduboy.print(targetResult);
   
     if(arduboy.justPressed(UP_BUTTON)){
-      if(currentPosY > 0){
+      if(selectMode == 1 && currentPosY > firstNumberY-1){
         currentPosY--;
+      }else{
+        if(currentPosY > 0){
+          currentPosY--;
+        } 
       }
     }
     if(arduboy.justPressed(DOWN_BUTTON)){
-      if(currentPosY < (GAMESPACE_HEIGHT-1)){
+      if(selectMode == 1 && currentPosY < firstNumberY+1){
         currentPosY++;
+      }else{
+        if(currentPosY < (GAMESPACE_HEIGHT-1)){
+          currentPosY++;
+        }
       }
     }
     if(arduboy.justPressed(LEFT_BUTTON)){
-      if(currentPosX > 0){
+      if(selectMode == 1 && currentPosX > firstNumberX-1){
         currentPosX--;
+      }else{
+        if(currentPosX > 0){
+          currentPosX--;
+        }
       }
     }
     if(arduboy.justPressed(RIGHT_BUTTON)){
-      if(currentPosX < (GAMESPACE_WIDTH-1)){
+      if(selectMode == 1 && currentPosX < firstNumberX+1){
         currentPosX++;
+      }else{
+        if(currentPosX < (GAMESPACE_WIDTH-1)){
+          currentPosX++;
+        }
+      }
+    }
+
+    if(arduboy.justPressed(A_BUTTON)){
+      // TODO Switch to second number select
+      if(selectMode == 0){
+        firstNumberX = currentPosX;
+        firstNumberY = currentPosY;
+        selectMode = 1;
+      }else if(selectMode == 1){
+        if(currentPosX == firstNumberX && currentPosY == firstNumberY){
+          selectMode = 0;
+        }
       }
     }
   }
